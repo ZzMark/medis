@@ -114,12 +114,12 @@ const menuTemplates: MenuItemConstructorOptions[] = [{
   submenu: [{
     label: 'Report an Issue...',
     click() {
-      require('shell').openExternal('mailto:medis@zihua.li')
+      require('electron').shell.openExternal('mailto:medis@zihua.li')
     }
   }, {
     label: 'Learn More',
     click() {
-      require('shell').openExternal('http://getmedis.com')
+      require('electron').shell.openExternal('http://getmedis.com')
     }
   }]
 }]
