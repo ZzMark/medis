@@ -15,6 +15,7 @@ require('codemirror/addon/search/jump-to-line')
 require('codemirror/addon/dialog/dialog')
 require('codemirror/addon/dialog/dialog.css')
 import jsonlint from 'jsonlint'
+import JSONBig from 'json-bigint'
 window.jsonlint = jsonlint.parser
 require('codemirror/lib/codemirror.css')
 require('codemirror/addon/lint/lint.css')
@@ -106,7 +107,7 @@ class Editor extends React.PureComponent {
         alert('The json is invalid. Please check again.')
         return
       }
-      content = msgpack.encode(JSON.parse(content))
+      content = msgpack.encode(JSONBig.parse(content))
     }
     this.props.onSave(content, err => {
       if (err) {
@@ -250,12 +251,12 @@ export default Editor
 
 function tryFormatJSON(jsonString, beautify) {
   try {
-    const o = JSON.parse(jsonString)
+    const o = JSONBig.parse(jsonString)
     if (o && typeof o === 'object' && o !== null) {
       if (beautify) {
-        return JSON.stringify(o, null, '\t')
+        return JSONBig.stringify(o, null, '\t')
       }
-      return JSON.stringify(o)
+      return JSONBig.stringify(o)
     }
   } catch (e) { /**/ }
 
@@ -266,15 +267,15 @@ function tryFormatMessagepack(buffer, beautify) {
   try {
     let o
     if (typeof buffer === 'string') {
-      o = JSON.parse(buffer)
+      o = JSONBig.parse(buffer)
     } else {
       o = msgpack.decode(buffer)
     }
     if (o && typeof o === 'object' && o !== null) {
       if (beautify) {
-        return JSON.stringify(o, null, '\t')
+        return JSONBig.stringify(o, null, '\t')
       }
-      return JSON.stringify(o)
+      return JSONBig.stringify(o)
     }
   } catch (e) { /**/ }
 
